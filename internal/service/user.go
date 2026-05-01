@@ -7,8 +7,16 @@ import (
 	"github.com/agdaniel10/Go-BasicAPI/internal/repository"
 )
 
+type UserRepository interface {
+	Create(ctx context.Context, user *model.User) error
+	FindByID(ctx context.Context, id string) (*model.User, error)
+	FindByEmail(ctx context.Context, email string) (*model.User, error)
+	UpdateUser(ctx context.Context, id string, user *model.User) (*model.User, error)
+	FindAll(ctx context.Context) ([]model.User, error)
+}
+
 type UserService struct {
-	repo *repository.UserRepository
+	repo UserRepository
 }
 
 func NewUserService(repo *repository.UserRepository) *UserService {
